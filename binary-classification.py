@@ -14,7 +14,7 @@ def main():
 
     #Creating data set instances
     training_list = [Train(id.value,x1.value,x2.value,x3.value,y.value) for row in df1]
-    testing_list = [Train(id.value,x1.value,x2.value,x3.value,y.value) for row in df1]
+    testing_list = [Train(id.value,x1.value,x2.value,x3.value,y.value) for row in df2]
 
     #Write an output file
     writer = pd.ExcelWriter(OUTPUT_PATH , engine='openpyxl')
