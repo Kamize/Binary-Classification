@@ -9,7 +9,7 @@ OUTPUT_PATH = FOLDER_PATH/"kNN_result.xlsx"
 K = 3
 
 def main():
-    # Loading bengkel.xlsx
+    # Loading excel file
     wb = load_workbook(EXCEL_PATH)
     train = wb["train"]
     test = wb["test"]
@@ -17,21 +17,28 @@ def main():
     # Getting data
     train_rows = train.rows
     test_rows = test.rows
-    train_header = next(train_rows)
-    test_header = next(test_rows)
+    header = next(train_rows)
+    next(test_rows)
 
     # Creating training data set from excel
-    train_set = [Data(id = id.value, value = y.value, x1.value, x2.value, x3.value) for id, x1, x2, x3, y in train_rows]
-    # test_set = [Data(id = id.value, value = y.value, x1.value, x2.value, x3.value) for id, x1, x2, x3, y in train_rows]
-    test_set = []
+    train_set = [Data(id.value, x1.value, x2.value, x3.value, value = y.value) for id, x1, x2, x3, y in train_rows]
+    test_set = [Data(id.value, x1.value, x2.value, x3.value) for id, x1, x2, x3, _ in train_rows]
+
+    # Closing excel file
+    wb.close()
 
     # kNN
     for test_data in test_set:
         test_data.value = kNN(test_data, train_set)
 
-    # Closing excel file
-    wb.close()
-
+    # Creating output file
+    wb = Workbook()
+    ws = wb.active
+    ws.title = "Output kNN"
+    ws.append(header)
+    
+    for data in test_set:
+        ws.append(data.get_row())
 
 
 class Data():
@@ -41,6 +48,9 @@ class Data():
         self.coords = []
         for point in args:
             self.coords.append(point)
+
+    def get_row(self):
+        return self.id, *self.coords, self.value
 
 def euclidian_distance(data1, data2):
     sum = 0
@@ -55,5 +65,5 @@ def kNN(test_data, train_set):
         value_counter[data.value]+=1
     return max(value_counter, key=value_counter.get)
 
-def get_data(self):
-    return self.id, *self.coords, self.value
+if __name__ == "__main__":
+    main()
