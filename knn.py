@@ -6,23 +6,27 @@ FOLDER_PATH = Path(__file__).parent
 EXCEL_PATH = FOLDER_PATH/"traintest.xlsx"
 OUTPUT_PATH = FOLDER_PATH/"kNN_result.xlsx"
 
+# Worksheets name
+TRAINING_WS = "train"
+TESTING_WS = "test"
+
 K = 3
 
 def main():
     # Loading excel file
     wb = load_workbook(EXCEL_PATH)
-    train = wb["train"]
-    test = wb["test"]
+    train = wb[TRAINING_WS]
+    test = wb[TESTING_WS]
 
     # Getting data
     train_rows = train.rows
     test_rows = test.rows
-    header = next(train_rows)
+    header = (cell.value for cell in next(train_rows))
     next(test_rows)
 
     # Creating training data set from excel
     train_set = [Data(id.value, x1.value, x2.value, x3.value, value = y.value) for id, x1, x2, x3, y in train_rows]
-    test_set = [Data(id.value, x1.value, x2.value, x3.value) for id, x1, x2, x3, _ in train_rows]
+    test_set = [Data(id.value, x1.value, x2.value, x3.value) for id, x1, x2, x3, _ in test_rows]
 
     # Closing excel file
     wb.close()
@@ -39,6 +43,8 @@ def main():
     
     for data in test_set:
         ws.append(data.get_row())
+
+    wb.save(OUTPUT_PATH)
 
 
 class Data():
