@@ -3,8 +3,8 @@ from pathlib import Path
 
 # Paths for file processing
 FOLDER_PATH = Path(__file__).parent
-EXCEL_PATH = FOLDER_PATH/"bengkel.xlsx"
-OUTPUT_PATH = FOLDER_PATH/"top10.xlsx"
+EXCEL_PATH = FOLDER_PATH/"traintest.xlsx"
+OUTPUT_PATH = FOLDER_PATH/"kNN_result.xlsx"
 
 K = 3
 
@@ -35,7 +35,7 @@ def main():
 
 
 class Data():
-    def __init__(self, id,  *args, value):
+    def __init__(self, id,  *args, value=None):
         self.id = id
         self.value = value
         self.coords = []
