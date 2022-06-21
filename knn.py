@@ -35,7 +35,7 @@ def main():
 
 
 class Data():
-    def __init__(self, id, value, *args):
+    def __init__(self, id,  *args, value):
         self.id = id
         self.value = value
         self.coords = []
