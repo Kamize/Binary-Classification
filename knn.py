@@ -68,9 +68,9 @@ def euclidian_distance(data1, data2):
     return sum**(1/2)
 
 def kNN(test_data, train_set, k=1):
-    kNN_list = sorted(train_set, key=lambda train_data: euclidian_distance(train_data, test_data))
+    neighbor_list = sorted(train_set, key=lambda train_data: euclidian_distance(train_data, test_data))
     value_counter = {0:0, 1:0}
-    for data in kNN_list[:k]:
+    for data in neighbor_list[:k]:
         value_counter[data.value]+=1
     return max(value_counter, key=value_counter.get)
 
