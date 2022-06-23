@@ -32,7 +32,10 @@ def main():
     # Initializing K value using user input
     k = 0
     while k not in range(1, len(train_set)):
-        k = int(input("k value: "))
+        try:
+            k = int(input("k value: "))
+        except ValueError:
+            k = 0
 
     # kNN
     for test_data in test_set:
