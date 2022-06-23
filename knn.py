@@ -10,8 +10,6 @@ OUTPUT_PATH = FOLDER_PATH/"kNN_result.xlsx"
 TRAINING_WS = "train"
 TESTING_WS = "test"
 
-K = 3
-
 def main():
     # Loading excel file
     wb = load_workbook(EXCEL_PATH)
@@ -30,10 +28,15 @@ def main():
 
     # Closing excel file
     wb.close()
+    
+    # Initializing K value using user input
+    k = 0
+    while k not in range(1, len(train_set)):
+        k = int(input("k value: "))
 
     # kNN
     for test_data in test_set:
-        test_data.value = kNN(test_data, train_set)
+        test_data.value = kNN(test_data, train_set, k)
 
     # Creating output file
     wb = Workbook()
@@ -64,10 +67,10 @@ def euclidian_distance(data1, data2):
         sum += (point2-point1)**2
     return sum**(1/2)
 
-def kNN(test_data, train_set):
+def kNN(test_data, train_set, k=1):
     kNN_list = sorted(train_set, key=lambda train_data: euclidian_distance(train_data, test_data))
     value_counter = {0:0, 1:0}
-    for data in kNN_list[:K]:
+    for data in kNN_list[:k]:
         value_counter[data.value]+=1
     return max(value_counter, key=value_counter.get)
 
