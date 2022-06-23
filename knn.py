@@ -4,7 +4,7 @@ from pathlib import Path
 # Paths for file processing
 FOLDER_PATH = Path(__file__).parent
 EXCEL_PATH = FOLDER_PATH/"traintest.xlsx"
-OUTPUT_PATH = FOLDER_PATH/"kNN_result.xlsx"
+OUTPUT_PATH = FOLDER_PATH/"{}NN_result.xlsx"
 
 # Worksheets name
 TRAINING_WS = "train"
@@ -50,7 +50,7 @@ def main():
     for data in test_set:
         ws.append(data.get_row())
 
-    wb.save(OUTPUT_PATH)
+    wb.save(str(OUTPUT_PATH).format(k))
 
 
 class Data():
