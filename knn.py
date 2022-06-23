@@ -54,6 +54,9 @@ def main():
 
 
 class Data():
+    '''
+        Data class to represent data in traintest.xlsx
+    '''
     def __init__(self, id,  *args, value=None):
         self.id = id
         self.value = value
@@ -62,19 +65,38 @@ class Data():
             self.coords.append(point)
 
     def get_row(self):
+        'returns a tuple containing data in the instance'
         return self.id, *self.coords, self.value
 
 def euclidian_distance(data1, data2):
+    '''
+        Returns the euclidian distance
+    '''
+    # Initializing sum value
     sum = 0
+
+    # Adding the squared distance between 2 coordinate in each data to sum
     for point1, point2 in zip(data1.coords, data2.coords):
         sum += (point2-point1)**2
+
+    # Returning square root of sum
     return sum**(1/2)
 
 def kNN(test_data, train_set, k=1):
+    '''
+        Returns a classification value of test_data based on train_set using kNN algorithm
+    '''
+    # Listing neighbor. Sorted ascending by euclidian distance
     neighbor_list = sorted(train_set, key=lambda train_data: euclidian_distance(train_data, test_data))
+
+    # Initializing classification value counter
     value_counter = {0:0, 1:0}
+
+    # Counting classification value of first neighbor to k-th neighbor
     for data in neighbor_list[:k]:
         value_counter[data.value]+=1
+
+    # Returns the classification value with the most count 
     return max(value_counter, key=value_counter.get)
 
 if __name__ == "__main__":
