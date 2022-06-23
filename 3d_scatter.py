@@ -25,7 +25,7 @@ def main():
     next(test_rows)
 
     # Initializing color table
-    color_table = {0:'red', 1:'blue', '?':'yellow'}
+    color_table = {0:'red', 1:'blue', '?':'#00ff00'}
 
     # Creating training data set from excel
     for id, x1, x2, x3, y in chain(train_rows, test_rows):
